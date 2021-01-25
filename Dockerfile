@@ -1,4 +1,6 @@
-FROM alpine as builder
-RUN apk add --no-cache musl-dev linux-headers python3-dev gcc py-pip nodejs npm && npm install -g ganache-cli
+FROM ubuntu as builder
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3 python3-pip curl
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs
 ADD requirements.txt .
 RUN pip3 install -r requirements.txt
